@@ -1,0 +1,20 @@
+{
+    "homepage": "https://duplicatesearcher.net/duplicate_searcher?lang=en",
+    "license": "Freeware",
+
+    "url": "https://duplicatesearcher.net/download_duplicate_searcher?id=zip&sid=3fea0e48586f4f46849005ae258c3390&version=6.0.3",
+    "hash": "ac51ad2a2e63d15759cd444fc6c9a0f462d40d6d8f250b58e119181c09507477",
+    "version": "6.0.3",
+
+    "extract_dir": "Dup_Same_File_Searcher_6.0.3",
+    "bin": "DuplicateSearcher.exe",
+    "shortcuts": [
+        ["DuplicateSearcher.exe", "Duplicate & Same Files Searcher"]
+    ],
+
+    "checkver": "Latest version of Duplicate & Same Files Searcher: (\\d+\\.\\d+(?:\\.\\d+)?)",
+    "autoupdate": {
+        "url": "https://duplicatesearcher.net/download_duplicate_searcher?id=zip&sid=3fea0e48586f4f46849005ae258c3390&version=$version",
+        "extract_dir": "Dup_Same_File_Searcher_$version"
+    }
+}
