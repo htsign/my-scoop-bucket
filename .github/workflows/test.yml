@@ -1,0 +1,34 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - name: remove default pester
+        run: |
+          $module = "C:\Program Files\WindowsPowerShell\Modules\Pester"
+          echo ::group::takeown
+          takeown /F $module /A /R
+          echo ::endgroup::
+          echo '::group::icacls reset'
+          icacls $module /reset
+          echo ::endgroup::
+          echo '::group::icacls grant'
+          icacls $module /grant "*S-1-5-32-544:F" /inheritance:d /T
+          echo ::endgroup::
+          echo ::group::remove
+          Remove-Item -Path $module -Recurse -Force -Confirm:$false -Verbose
+          echo ::endgroup::
+      - name: install modules
+        run: |
+          Install-Module -Name Pester -Force -RequiredVersion 4.10.1
+          Install-Module -Name BuildHelpers -Force
+      - name: install scoop
+        run: |
+          Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+          echo "::add-path::$env:UserProfile\scoop\shims"
+      - uses: actions/checkout@v2
+      - name: run test
+        run: .\bin\test.ps1
